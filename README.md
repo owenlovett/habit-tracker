@@ -3,6 +3,7 @@
 A habit tracking web app built with React and Firebase. Track your daily habits, build streaks, and visualize your consistency with a heatmap.
 
 ## Live Demo
+[simple-streaks.vercel.app](https://simple-streaks.vercel.app)
 
 ## Features
 - Google sign-in via Firebase Auth
