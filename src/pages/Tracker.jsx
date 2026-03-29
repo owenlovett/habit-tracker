@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { signOut } from 'firebase/auth'
 import { auth } from '../firebase/config'
 import { useHabits } from '../hooks/useHabits'
+import Heatmap from '../components/Heatmap'
 
 function getDisplayDate() {
   const d = new Date()
@@ -14,7 +15,7 @@ function getDisplayDate() {
 }
 
 function Tracker({ user }) {
-  const { habits, todayLog, loading, addHabit, deleteHabit, toggleHabit } = useHabits(user)
+  const { habits, todayLog, allLogs, loading, addHabit, deleteHabit, toggleHabit, getStreak } = useHabits(user)
   const [input, setInput] = useState('')
   const date = getDisplayDate()
 
@@ -119,7 +120,7 @@ function Tracker({ user }) {
 
             {/* streak */}
             <span style={{ fontSize: '13px', color: '#888' }}>
-              🔥 {checked ? 1 : 0}
+              🔥 {getStreak(habit.id)}
             </span>
 
             {/* delete */}
@@ -158,6 +159,8 @@ function Tracker({ user }) {
         </button>
       </div>
 
+      <Heatmap allLogs={allLogs} habits={habits} />
+      
     </div>
   )
 }

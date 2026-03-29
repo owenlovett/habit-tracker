@@ -6,9 +6,8 @@ import {
   onSnapshot,
   addDoc,
   deleteDoc,
-  updateDoc,
   setDoc,
-  getDoc
+  getDocs
 } from 'firebase/firestore'
 
 function getToday() {
@@ -19,11 +18,11 @@ function getToday() {
 export function useHabits(user) {
   const [habits, setHabits] = useState([])
   const [todayLog, setTodayLog] = useState({})
+  const [allLogs, setAllLogs] = useState({})
   const [loading, setLoading] = useState(true)
 
   const today = getToday()
 
-  //habits collection
   useEffect(() => {
     if (!user) return
     const habitsRef = collection(db, 'users', user.uid, 'habits')
@@ -35,7 +34,6 @@ export function useHabits(user) {
     return () => unsub()
   }, [user])
 
-  //today's log
   useEffect(() => {
     if (!user) return
     const logRef = doc(db, 'users', user.uid, 'logs', today)
@@ -44,6 +42,17 @@ export function useHabits(user) {
     })
     return () => unsub()
   }, [user, today])
+
+  useEffect(() => {
+    if (!user) return
+    const logsRef = collection(db, 'users', user.uid, 'logs')
+    const unsub = onSnapshot(logsRef, (snap) => {
+      const logs = {}
+      snap.docs.forEach(d => { logs[d.id] = d.data() })
+      setAllLogs(logs)
+    })
+    return () => unsub()
+  }, [user])
 
   async function addHabit(name) {
     if (!name.trim()) return
@@ -63,8 +72,20 @@ export function useHabits(user) {
   }
 
   function getStreak(habitId) {
-    return todayLog[habitId] ? 1 : 0
+    let streak = 0
+    const d = new Date()
+    while (streak <= 365) {
+      const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+      const log = allLogs[key]
+      if (log && log[habitId]) {
+        streak++
+        d.setDate(d.getDate() - 1)
+      } else {
+        break
+      }
+    }
+    return streak
   }
 
-  return { habits, todayLog, loading, addHabit, deleteHabit, toggleHabit, getStreak, today }
+  return { habits, todayLog, allLogs, loading, addHabit, deleteHabit, toggleHabit, getStreak, today }
 }
