@@ -51,14 +51,16 @@ function Tracker({ user }) {
       transition: 'background 0.6s ease',
       display: 'flex',
       justifyContent: 'center',
-      padding: '2rem 1rem',
+      padding: '2rem 1.25rem',
+      boxSizing: 'border-box',
+      overflowX: 'hidden',
     }}>
-      <div style={{ width: '100%', maxWidth: '520px' }}>
+      <div style={{ width: '100%', maxWidth: '520px', boxSizing: 'border-box' }}>
 
         {/* header */}
         <div style={{
           display: 'flex', justifyContent: 'space-between',
-          alignItems: 'flex-start', marginBottom: '2rem'
+          alignItems: 'flex-start', marginBottom: '2rem', gap: '12px'
         }}>
           <div>
             <div style={{

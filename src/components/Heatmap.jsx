@@ -36,7 +36,8 @@ function Heatmap({ allLogs, habits }) {
         background: 'rgba(255,255,255,0.5)',
         border: '1px solid rgba(0,0,0,0.07)',
         borderRadius: '10px',
-        padding: '14px'
+        padding: '14px',
+        overflow: 'hidden'
       }}>
         {/* month labels row */}
         <div style={{ display: 'flex', gap: '3px', marginBottom: '4px' }}>
