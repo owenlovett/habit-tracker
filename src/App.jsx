@@ -10,20 +10,37 @@ function App() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    getRedirectResult(auth).catch(console.error)
+    const handleAuth = async () => {
+      try {
+        const result = await getRedirectResult(auth)
+        if (result?.user) {
+          setUser(result.user)
+          setLoading(false)
+          return
+        }
+      } catch (error) {
+        console.error('Redirect error:', error)
+      }
 
-    const unsub = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser)
-      setLoading(false)
-    })
-    return () => unsub()
+      const unsub = onAuthStateChanged(auth, (currentUser) => {
+        setUser(currentUser)
+        setLoading(false)
+      })
+      return () => unsub()
+    }
+
+    handleAuth()
   }, [])
 
-  if (loading) return <div style={{
-    minHeight: '100vh', display: 'flex',
-    alignItems: 'center', justifyContent: 'center',
-    fontSize: '14px', color: '#888'
-  }}>Loading...</div>
+  if (loading) return (
+    <div style={{
+      minHeight: '100vh', display: 'flex',
+      alignItems: 'center', justifyContent: 'center',
+      fontSize: '14px', color: '#888'
+    }}>
+      Loading...
+    </div>
+  )
 
   return (
     <BrowserRouter>
