@@ -33,7 +33,7 @@ function Login() {
           fontSize: '24px', fontWeight: '600',
           color: '#1a1a1a', margin: '0 0 8px'
         }}>
-          Habit Tracker
+          Simple Streaks
         </h1>
         <p style={{ fontSize: '14px', color: '#888', margin: '0 0 2rem' }}>
           Build streaks. Stay consistent.
