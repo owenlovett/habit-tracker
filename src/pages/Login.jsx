@@ -1,4 +1,4 @@
-import { signInWithPopup, signInWithRedirect, isMobile } from 'firebase/auth'
+import { signInWithPopup, signInWithRedirect } from 'firebase/auth'
 import { auth, provider } from '../firebase/config'
 
 const isMobileDevice = () => /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
