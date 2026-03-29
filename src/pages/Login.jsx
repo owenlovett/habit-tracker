@@ -1,16 +1,10 @@
-import { signInWithPopup, signInWithRedirect } from 'firebase/auth'
+import { signInWithPopup } from 'firebase/auth'
 import { auth, provider } from '../firebase/config'
-
-const isMobileDevice = () => /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
 
 function Login() {
   const handleGoogleSignIn = async () => {
     try {
-      if (isMobileDevice()) {
-        await signInWithRedirect(auth, provider)
-      } else {
-        await signInWithPopup(auth, provider)
-      }
+      await signInWithPopup(auth, provider)
     } catch (error) {
       console.error('Login failed:', error)
     }
@@ -18,27 +12,16 @@ function Login() {
 
   return (
     <div style={{
-      minHeight: '100vh',
-      width: '100%',
-      background: '#f8d7da',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
+      minHeight: '100vh', width: '100%', background: '#f8d7da',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
     }}>
       <div style={{
-        background: 'rgba(255,255,255,0.7)',
-        border: '1px solid rgba(0,0,0,0.07)',
-        borderRadius: '16px',
-        padding: '3rem 2.5rem',
-        width: '100%',
-        maxWidth: '360px',
-        textAlign: 'center',
+        background: 'rgba(255,255,255,0.7)', border: '1px solid rgba(0,0,0,0.07)',
+        borderRadius: '16px', padding: '3rem 2.5rem',
+        width: '100%', maxWidth: '360px', textAlign: 'center',
       }}>
         <div style={{ fontSize: '32px', marginBottom: '8px' }}>🔥</div>
-        <h1 style={{
-          fontSize: '24px', fontWeight: '600',
-          color: '#1a1a1a', margin: '0 0 8px'
-        }}>
+        <h1 style={{ fontSize: '24px', fontWeight: '600', color: '#1a1a1a', margin: '0 0 8px' }}>
           Simple Streaks
         </h1>
         <p style={{ fontSize: '14px', color: '#888', margin: '0 0 2rem' }}>
@@ -51,10 +34,8 @@ function Login() {
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px',
             background: 'white', border: '1px solid rgba(0,0,0,0.12)',
             borderRadius: '10px', fontSize: '14px', fontWeight: '500',
-            color: '#1a1a1a', cursor: 'pointer', transition: 'background 0.15s'
+            color: '#1a1a1a', cursor: 'pointer'
           }}
-          onMouseEnter={e => e.currentTarget.style.background = '#f5f5f5'}
-          onMouseLeave={e => e.currentTarget.style.background = 'white'}
         >
           <svg width="18" height="18" viewBox="0 0 18 18">
             <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/>
