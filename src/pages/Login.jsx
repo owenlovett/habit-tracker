@@ -1,10 +1,16 @@
-import { signInWithPopup } from 'firebase/auth'
+import { signInWithPopup, signInWithRedirect, isMobile } from 'firebase/auth'
 import { auth, provider } from '../firebase/config'
+
+const isMobileDevice = () => /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
 
 function Login() {
   const handleGoogleSignIn = async () => {
     try {
-      await signInWithPopup(auth, provider)
+      if (isMobileDevice()) {
+        await signInWithRedirect(auth, provider)
+      } else {
+        await signInWithPopup(auth, provider)
+      }
     } catch (error) {
       console.error('Login failed:', error)
     }
